@@ -4,6 +4,7 @@ import Link from "./Link";
 import { SelectedPage } from "@/shared/type";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
+import ActionButton from "@/shared/ActionButton";
 
 type Props = {
   selectedPage: SelectedPage;
@@ -49,7 +50,9 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
                 </div>
                 <div className={`${flexBetween} inner-right-side gap-8 `}>
                   <p>sign in</p>
-                  <button>become a member</button>
+                  <ActionButton setSelectedPage={setSelectedPage}>
+                    become a member
+                  </ActionButton>
                 </div>
               </div>
             ) : (
@@ -63,6 +66,40 @@ const Navbar = ({ selectedPage, setSelectedPage }: Props) => {
           </div>
         </div>
       </div>
+
+      {/* mobile menu modal */}
+      {!isAboveMediumScreen && isMenuToggled && (
+        <div className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100 drop-shadow-xl">
+          <div className="flex justify-end p-12">
+            <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
+              <XMarkIcon className="h-6 w-6 text-gray-400" />
+            </button>
+          </div>
+
+          <div className={`mobile menu ml-[33%] flex flex-col gap-10 text-2xl`}>
+            <Link
+              page="home"
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+            />
+            <Link
+              page="benefits"
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+            />
+            <Link
+              page="our classes"
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+            />
+            <Link
+              page="contact us"
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+            />
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
